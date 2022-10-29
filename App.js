@@ -22,7 +22,15 @@ export default function App() {
       })
   }, [])
 
-  if (isLoading) return <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1 }} />
+  if (isLoading) return (
+    <ActivityIndicator
+      size="large"
+      color="#0000ff"
+      testID="loading"
+      accessibilityLabel="App is loading books"
+      style={{ flex: 1 }}
+    />
+  )
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
