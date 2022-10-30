@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, Text, View, SafeAreaView } from 'react-native'
+import { ActivityIndicator, FlatList, Text, View, SafeAreaView, StyleSheet, Image } from 'react-native'
 
 export default function App() {
   const [isLoading, setLoading] = useState(true)
@@ -22,6 +22,20 @@ export default function App() {
       })
   }, [])
 
+  const BookItem = ({ item }) => (
+    <View style={styles.bookItemContainer}>
+      <Image
+        source={{ uri: item.imgUrl }}
+        style={styles.bookItemImage}
+      />
+      <View>
+        <Text>{item.title}</Text>
+        <Text>{item.subtitle}</Text>
+        <Text>{item.description}</Text>
+      </View>
+    </View>
+  )
+
   if (isLoading) return (
     <ActivityIndicator
       size="large"
@@ -33,11 +47,27 @@ export default function App() {
   )
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>
-        Fudap Book Store
-      </Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={data}
+        renderItem={BookItem}
+        keyExtractor={item => item.id.toString()}
+        accessibilityLabel="books"
+      />
     </SafeAreaView>
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  bookItemContainer: {
+    flexDirection: 'row',
+    margin: 20,
+  },
+  bookItemImage: {
+    height: 150,
+    width: 100,
+  },
+})
